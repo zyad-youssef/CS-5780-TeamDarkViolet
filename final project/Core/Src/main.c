@@ -33,6 +33,9 @@ int main(void)
 	RCC->AHBENR |= (1<<19) | (1<<17);
 	//en TIM2 clock
   RCC->APB1ENR |= (1<<0); 
+	
+	//initialize all leds
+	GPIOC->MODER |= (1<<16) | (1<<18)| (1<<14) | (1<<12);
 
  //set pc0 to be output, pull up, 
     GPIOC->MODER |= GPIO_MODER_MODER0_0;
@@ -80,6 +83,8 @@ int main(void)
 		
 		
 		
+
+		
   while (1)
   {
 		 GPIOC -> ODR |= GPIO_ODR_0;
@@ -94,8 +99,9 @@ int main(void)
     GPIOC -> ODR &= ~(GPIO_ODR_0);
     HAL_Delay(60);
 		
-		if(obstacle_found)
+		if(obstacle_found) {
 			stop();
+		}
 		else
 			go_forward();
 	
